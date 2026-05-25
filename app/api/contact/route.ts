@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 export async function POST(req: NextRequest) {
   const { name, email, phone, registration, service, message, vehicleInfo } = await req.json();
@@ -27,6 +27,12 @@ export async function POST(req: NextRequest) {
     : "";
 
   try {
+    if (!resend) {
+      console.log("Resend API key not configured - logging contact instead");
+      console.log({ name, email, phone, service, message });
+      return Response.json({ success: true });
+    }
+
     await resend.emails.send({
       from: "AI Diagnostics Ltd <noreply@aidiagnosticsltd.com>",
       to: ["ismail@aidiagnosticsltd.com"],

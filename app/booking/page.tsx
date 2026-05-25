@@ -95,10 +95,13 @@ export default function BookingPage() {
 
             {/* Booking form */}
             <FadeIn className="lg:col-span-2">
-              <div className="bg-[#333] border border-[#404040] rounded-2xl overflow-hidden">
+              <div className="bg-[#333] border border-[#404040] rounded-2xl overflow-hidden shadow-xl">
+                <div className="bg-[#1e1e1e] px-8 py-6 border-b border-[#404040]">
+                  <h2 className="text-white text-2xl font-bold">Send a Booking Enquiry</h2>
+                </div>
                 <Suspense
                   fallback={
-                    <div className="p-7 animate-pulse">
+                    <div className="p-8 animate-pulse">
                       <div className="h-12 bg-[#404040] rounded-lg mb-4" />
                       <div className="h-8 bg-[#404040] rounded-lg w-1/3" />
                     </div>

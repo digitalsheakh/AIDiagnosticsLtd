@@ -147,19 +147,14 @@ export default function BookingForm() {
 
   return (
     <div className="flex flex-col gap-0">
-      {/* Step 1 — Plate input */}
-      <div className="p-7 pb-6">
-        <div className="flex items-center gap-2 mb-4">
-          <div className="w-8 h-8 bg-[#29abe2] text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
-          <p className="text-white text-sm font-bold">
-            Your Vehicle
-          </p>
-        </div>
+      {/* Vehicle Lookup Section */}
+      <div className="p-8 pb-6 bg-[#2a2a2a] rounded-t-2xl">
+        <h3 className="text-white text-lg font-semibold mb-4">Look Up Your Vehicle (Optional)</h3>
         <div className="flex gap-3">
-          {/* UK plate input */}
-          <div className="flex-1 flex rounded-lg overflow-hidden border-2 border-[#012169] focus-within:border-[#29abe2] transition-colors bg-white">
-            <div className="w-10 bg-[#012169] flex items-center justify-center shrink-0 p-1">
-              <Image src="/uk-flag.png" alt="UK" width={32} height={32} className="w-full h-auto" />
+          {/* UK plate input with flag */}
+          <div className="flex-1 flex rounded-lg overflow-hidden border-2 border-[#404040] focus-within:border-[#29abe2] transition-colors bg-white shadow-lg">
+            <div className="w-12 bg-[#FCD116] flex items-center justify-center shrink-0 px-2">
+              <Image src="/uk-flag.png" alt="GB" width={28} height={28} className="w-full h-auto" />
             </div>
             <input
               type="text"
@@ -168,17 +163,17 @@ export default function BookingForm() {
               onKeyDown={(e) => e.key === "Enter" && lookupVehicle(reg)}
               placeholder="AB12 CDE"
               maxLength={8}
-              className="flex-1 px-3 py-3 text-[#1e1e1e] font-bold tracking-widest uppercase bg-transparent focus:outline-none text-sm placeholder:text-gray-300 placeholder:font-normal placeholder:tracking-normal"
+              className="flex-1 px-4 py-3.5 text-[#1e1e1e] font-bold tracking-[0.15em] uppercase bg-transparent focus:outline-none placeholder:text-gray-400 placeholder:font-normal placeholder:tracking-normal"
             />
           </div>
           <button
             type="button"
             onClick={() => lookupVehicle(reg)}
             disabled={lookupLoading || !reg.trim()}
-            className="bg-[#29abe2] hover:bg-[#1a7fb5] disabled:opacity-50 text-white font-semibold px-5 py-3 rounded-lg transition-colors flex items-center gap-2 shrink-0 text-sm"
+            className="bg-[#29abe2] hover:bg-[#1a7fb5] disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold px-6 py-3.5 rounded-lg transition-all flex items-center gap-2 shrink-0 shadow-lg"
           >
-            {lookupLoading ? <Loader2 size={15} className="animate-spin" /> : <Search size={15} />}
-            {lookupLoading ? "Checking..." : "Check"}
+            {lookupLoading ? <Loader2 size={16} className="animate-spin" /> : <Search size={16} />}
+            {lookupLoading ? "Looking Up..." : "Look Up"}
           </button>
         </div>
 
@@ -226,97 +221,78 @@ export default function BookingForm() {
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden"
           >
-            <form onSubmit={handleSubmit} className="px-7 pb-7 flex flex-col gap-5">
-              <div className="border-t border-[#404040] pt-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-8 h-8 bg-[#29abe2] text-white rounded-full flex items-center justify-center text-sm font-bold">2</div>
-                  <p className="text-white text-sm font-bold">
-                    Your Details
-                  </p>
+            <form onSubmit={handleSubmit} className="p-8 pt-6 flex flex-col gap-6 bg-[#2a2a2a]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label className="block text-sm font-semibold text-white mb-2">Full Name *</label>
+                  <input
+                    required
+                    type="text"
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    placeholder="John Smith"
+                    className="w-full bg-[#333] border border-[#404040] focus:border-[#29abe2] text-white placeholder:text-[#606060] rounded-lg px-4 py-3.5 outline-none transition-colors"
+                  />
                 </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold text-white mb-2">Full Name *</label>
-                    <input
-                      required
-                      type="text"
-                      value={form.name}
-                      onChange={(e) => setForm({ ...form, name: e.target.value })}
-                      placeholder="John Smith"
-                      className="w-full bg-[#2a2a2a] border border-[#404040] focus:border-[#29abe2] text-white placeholder:text-[#606060] rounded-lg px-4 py-3 text-sm outline-none transition-colors"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-white mb-2">Phone Number *</label>
-                    <input
-                      required
-                      type="tel"
-                      value={form.phone}
-                      onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                      placeholder="07000 000000"
-                      className="w-full bg-[#2a2a2a] border border-[#404040] focus:border-[#29abe2] text-white placeholder:text-[#606060] rounded-lg px-4 py-3 text-sm outline-none transition-colors"
-                    />
-                  </div>
-                </div>
-
-                <div className="mt-4">
-                  <label className="block text-xs font-semibold text-white mb-2">Email Address *</label>
+                <div>
+                  <label className="block text-sm font-semibold text-white mb-2">Email Address *</label>
                   <input
                     required
                     type="email"
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                     placeholder="john@example.com"
-                    className="w-full bg-[#2a2a2a] border border-[#404040] focus:border-[#29abe2] text-white placeholder:text-[#606060] rounded-lg px-4 py-3 text-sm outline-none transition-colors"
+                    className="w-full bg-[#333] border border-[#404040] focus:border-[#29abe2] text-white placeholder:text-[#606060] rounded-lg px-4 py-3.5 outline-none transition-colors"
                   />
                 </div>
               </div>
 
-              <div className="border-t border-[#404040] pt-5">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-8 h-8 bg-[#29abe2] text-white rounded-full flex items-center justify-center text-sm font-bold">3</div>
-                  <p className="text-white text-sm font-bold">
-                    Your Booking
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold text-white mb-2">Service Required</label>
-                    <select
-                      value={form.service}
-                      onChange={(e) => setForm({ ...form, service: e.target.value })}
-                      className="w-full bg-[#2a2a2a] border border-[#404040] focus:border-[#29abe2] text-white rounded-lg px-4 py-3 text-sm outline-none transition-colors appearance-none"
-                    >
-                      <option value="">Select a service...</option>
-                      {services.map((s) => (
-                        <option key={s} value={s}>{s}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-white mb-2">Preferred Date</label>
-                    <input
-                      type="date"
-                      value={form.preferredDate}
-                      onChange={(e) => setForm({ ...form, preferredDate: e.target.value })}
-                      min={new Date().toISOString().split("T")[0]}
-                      className="w-full bg-[#2a2a2a] border border-[#404040] focus:border-[#29abe2] text-white rounded-lg px-4 py-3 text-sm outline-none transition-colors"
-                    />
-                  </div>
-                </div>
-
-                <div className="mt-4">
-                  <label className="block text-xs font-semibold text-white mb-2">Additional Notes (Optional)</label>
-                  <textarea
-                    rows={3}
-                    value={form.message}
-                    onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    placeholder="Any warning lights, specific issues or concerns..."
-                    className="w-full bg-[#2a2a2a] border border-[#404040] focus:border-[#29abe2] text-white placeholder:text-[#606060] rounded-lg px-4 py-3 text-sm outline-none transition-colors resize-none"
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label className="block text-sm font-semibold text-white mb-2">Phone Number *</label>
+                  <input
+                    required
+                    type="tel"
+                    value={form.phone}
+                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                    placeholder="07000 000000"
+                    className="w-full bg-[#333] border border-[#404040] focus:border-[#29abe2] text-white placeholder:text-[#606060] rounded-lg px-4 py-3.5 outline-none transition-colors"
                   />
                 </div>
+                <div>
+                  <label className="block text-sm font-semibold text-white mb-2">Preferred Date</label>
+                  <input
+                    type="date"
+                    value={form.preferredDate}
+                    onChange={(e) => setForm({ ...form, preferredDate: e.target.value })}
+                    className="w-full bg-[#333] border border-[#404040] focus:border-[#29abe2] text-white rounded-lg px-4 py-3.5 outline-none transition-colors"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-white mb-2">Service Required</label>
+                <select
+                  value={form.service}
+                  onChange={(e) => setForm({ ...form, service: e.target.value })}
+                  className="w-full bg-[#333] border border-[#404040] focus:border-[#29abe2] text-white rounded-lg px-4 py-3.5 outline-none transition-colors appearance-none cursor-pointer"
+                >
+                  <option value="">Select a service...</option>
+                  {services.map((s) => (
+                    <option key={s} value={s}>{s}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-white mb-2">Additional Notes (Optional)</label>
+                <textarea
+                  rows={4}
+                  value={form.message}
+                  onChange={(e) => setForm({ ...form, message: e.target.value })}
+                  placeholder="Any warning lights, specific issues or concerns..."
+                  className="w-full bg-[#333] border border-[#404040] focus:border-[#29abe2] text-white placeholder:text-[#606060] rounded-lg px-4 py-3.5 outline-none transition-colors resize-none"
+                />
               </div>
 
               {submitError && (

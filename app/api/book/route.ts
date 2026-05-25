@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 export async function POST(req: NextRequest) {
   const {
@@ -47,6 +47,12 @@ export async function POST(req: NextRequest) {
       : "";
 
   try {
+    if (!resend) {
+      console.log("Resend API key not configured - logging booking instead");
+      console.log({ name, email, phone, registration, service, preferredDate, notes });
+      return Response.json({ success: true });
+    }
+
     await resend.emails.send({
       from: "AI Diagnostics Ltd <noreply@aidiagnosticsltd.com>",
       to: ["eppa.shop.uk@gmail.com"],

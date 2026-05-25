@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { Search, Loader2, Car, CheckCircle, AlertCircle, Send } from "lucide-react";
+import Image from "next/image";
 
 const services = [
   "MOT Only",
@@ -132,15 +133,13 @@ export default function ContactForm() {
 
   return (
     <div className="bg-[#333] border border-[#404040] rounded-2xl p-7">
-      <h2 className="text-white font-bold text-xl mb-6">Send a Booking Enquiry</h2>
-
       {/* Vehicle lookup */}
       <div className="mb-6 p-5 bg-[#2a2a2a] border border-[#404040] rounded-xl">
         <p className="text-white text-sm font-semibold mb-3">Look Up Your Vehicle (Optional)</p>
         <div className="flex gap-3">
-          <div className="flex-1 relative">
-            <div className="absolute left-0 top-0 bottom-0 w-10 bg-yellow-400 rounded-l-lg flex items-center justify-center">
-              <span className="text-blue-900 font-black text-[10px]">GB</span>
+          <div className="flex-1 flex rounded-lg overflow-hidden border-2 border-[#404040] focus-within:border-[#29abe2] transition-colors bg-white shadow-lg">
+            <div className="w-12 bg-[#FCD116] flex items-center justify-center shrink-0 px-2">
+              <Image src="/uk-flag.png" alt="GB" width={28} height={28} className="w-full h-auto" />
             </div>
             <input
               type="text"
@@ -149,7 +148,7 @@ export default function ContactForm() {
               onKeyDown={(e) => e.key === "Enter" && handleLookupFor(reg)}
               placeholder="AB12 CDE"
               maxLength={8}
-              className="w-full pl-13 pr-3 py-2.5 bg-white text-[#1e1e1e] font-bold tracking-widest uppercase rounded-lg border-2 border-yellow-400 focus:outline-none focus:border-[#29abe2] text-sm placeholder:text-gray-300 placeholder:font-normal placeholder:tracking-normal"
+              className="flex-1 px-4 py-3 text-[#1e1e1e] font-bold tracking-[0.15em] uppercase bg-transparent focus:outline-none placeholder:text-gray-400 placeholder:font-normal placeholder:tracking-normal"
             />
           </div>
           <button
