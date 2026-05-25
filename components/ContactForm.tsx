@@ -40,7 +40,7 @@ interface VehicleData {
 
 export default function ContactForm() {
   const searchParams = useSearchParams();
-  const [reg, setReg] = useState(searchParams.get("reg") || "");
+  const [reg, setReg] = useState("");
   const [vehicle, setVehicle] = useState<VehicleData | null>(null);
   const [lookupLoading, setLookupLoading] = useState(false);
   const [lookupError, setLookupError] = useState("");
@@ -51,13 +51,13 @@ export default function ContactForm() {
   const [submitError, setSubmitError] = useState("");
 
   useEffect(() => {
-    const regParam = searchParams.get("reg");
+    const regParam = searchParams?.get("reg");
     if (regParam) {
       setReg(regParam);
       handleLookupFor(regParam);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [searchParams]);
 
   const handleLookupFor = async (registration: string) => {
     const cleaned = registration.replace(/\s/g, "").toUpperCase();

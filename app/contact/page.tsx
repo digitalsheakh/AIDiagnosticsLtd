@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import { MapPin, Phone, Mail, Clock, Calendar, ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
@@ -56,7 +57,15 @@ export default function ContactPage() {
               </p>
             </FadeIn>
             <FadeIn delay={0.1}>
-              <ContactForm />
+              <Suspense fallback={
+                <div className="bg-[#333] border border-[#404040] rounded-2xl p-7 animate-pulse">
+                  <div className="h-12 bg-[#404040] rounded-lg mb-4" />
+                  <div className="h-10 bg-[#404040] rounded-lg mb-4" />
+                  <div className="h-10 bg-[#404040] rounded-lg" />
+                </div>
+              }>
+                <ContactForm />
+              </Suspense>
             </FadeIn>
           </div>
         </div>
