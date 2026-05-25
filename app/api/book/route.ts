@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
     }
 
     await resend.emails.send({
-      from: "AI Diagnostics Ltd <noreply@aidiagnosticsltd.com>",
+      from: "AI Diagnostics Ltd <onboarding@resend.dev>",
       to: ["eppa.shop.uk@gmail.com"],
       replyTo: email,
       subject: `New Booking — ${service || "General"} — ${name}`,

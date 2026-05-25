@@ -41,7 +41,7 @@ export default function Navbar() {
         >
           {/* Logo */}
           <Link href="/" className="shrink-0">
-            <div className="relative w-52 h-12">
+            <div className="relative w-44 h-11">
               <Image
                 src="/logo.png"
                 alt="AI Diagnostics Ltd"
