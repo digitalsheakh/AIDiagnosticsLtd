@@ -31,12 +31,12 @@ export default function Footer() {
 
         {/* Brand heading */}
         <div className="mb-10 pb-8 border-b border-white/8">
-          <div className="relative w-48 h-14">
+          <div className="relative w-64 h-16">
             <Image
-              src="/Diagnostics Ltd-bedford-logo.png"
+              src="/logo.png"
               alt="AI Diagnostics Ltd"
               fill
-              className="object-contain object-left mix-blend-screen"
+              className="object-contain object-left"
             />
           </div>
         </div>

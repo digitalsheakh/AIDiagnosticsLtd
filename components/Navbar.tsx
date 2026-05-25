@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone, Calendar } from "lucide-react";
+import { Menu, X, Phone, Calendar, MapPin } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const links = [
@@ -22,7 +22,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30);
+    const onScroll = () => setScrolled(window.scrollY > 200);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -41,12 +41,12 @@ export default function Navbar() {
         >
           {/* Logo */}
           <Link href="/" className="shrink-0">
-            <div className="relative w-40 h-10">
+            <div className="relative w-52 h-12">
               <Image
-                src="/Diagnostics Ltd-bedford-logo.png"
+                src="/logo.png"
                 alt="AI Diagnostics Ltd"
                 fill
-                className="object-contain object-left mix-blend-screen"
+                className="object-contain object-left"
                 priority
               />
             </div>
@@ -72,6 +72,15 @@ export default function Navbar() {
           {/* Desktop right */}
           <div className="hidden lg:flex items-center gap-3 shrink-0">
             <a
+              href="https://maps.google.com/?q=18+College+St,+Bedford+MK42+8LU"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-[#b0b0b0] hover:text-[#29abe2] text-xs transition-colors"
+            >
+              <MapPin size={13} className="text-[#29abe2]" />
+              18 College St, Bedford
+            </a>
+            <a
               href="tel:07986848798"
               className="flex items-center gap-1.5 text-[#29abe2] text-sm hover:text-[#4dc3f0] transition-colors"
             >
@@ -87,14 +96,43 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile hamburger */}
-          <button
-            className="lg:hidden text-[#b0b0b0] hover:text-white p-1.5 transition-colors"
-            onClick={() => setOpen(!open)}
-            aria-label="Toggle menu"
-          >
-            <Menu size={20} />
-          </button>
+          {/* Mobile right */}
+          <div className="lg:hidden flex items-center gap-2">
+            {scrolled && (
+              <>
+                <a
+                  href="https://maps.google.com/?q=18+College+St,+Bedford+MK42+8LU"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#29abe2] hover:text-[#4dc3f0] p-2 transition-colors"
+                  aria-label="View location"
+                >
+                  <MapPin size={18} />
+                </a>
+                <a
+                  href="tel:07986848798"
+                  className="text-[#29abe2] hover:text-[#4dc3f0] p-2 transition-colors"
+                  aria-label="Call us"
+                >
+                  <Phone size={18} />
+                </a>
+                <Link
+                  href="/booking"
+                  className="bg-[#29abe2] hover:bg-[#1a7fb5] text-white text-xs font-semibold px-3 py-2 rounded-lg transition-colors flex items-center gap-1"
+                >
+                  <Calendar size={14} />
+                  Book
+                </Link>
+              </>
+            )}
+            <button
+              className="text-[#b0b0b0] hover:text-white p-2 transition-colors"
+              onClick={() => setOpen(!open)}
+              aria-label="Toggle menu"
+            >
+              <Menu size={20} />
+            </button>
+          </div>
         </div>
       </header>
 
@@ -117,27 +155,29 @@ export default function Navbar() {
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed top-0 right-0 bottom-0 w-72 bg-[#141414] border-l border-[#252525] shadow-2xl z-50 lg:hidden flex flex-col"
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="fixed top-0 right-0 bottom-0 w-80 bg-gradient-to-b from-[#1a1a1a] to-[#141414] border-l border-[#2a2a2a] shadow-2xl z-50 lg:hidden flex flex-col"
             >
-              <div className="flex items-center justify-between px-5 py-4 border-b border-[#252525]">
-                <div className="relative w-28 h-9">
-                  <Image src="/Diagnostics Ltd-bedford-vecot-icon.png" alt="AI Diagnostics Ltd" fill className="object-contain object-left" />
+              {/* Header */}
+              <div className="flex items-center justify-between px-6 py-5 border-b border-[#2a2a2a]">
+                <div className="relative w-36 h-10">
+                  <Image src="/logo.png" alt="AI Diagnostics Ltd" fill className="object-contain object-left" />
                 </div>
-                <button onClick={() => setOpen(false)} className="text-[#606060] hover:text-white p-1 transition-colors">
-                  <X size={18} />
+                <button onClick={() => setOpen(false)} className="text-[#808080] hover:text-white p-2 hover:bg-white/5 rounded-lg transition-all">
+                  <X size={20} />
                 </button>
               </div>
 
-              <nav className="flex flex-col gap-1 p-4 flex-1 overflow-y-auto">
+              {/* Navigation Links */}
+              <nav className="flex flex-col gap-1.5 p-5 flex-1 overflow-y-auto">
                 {links.map(({ href, label }) => (
                   <Link
                     key={href}
                     href={href}
-                    className={`px-4 py-3 rounded-xl text-sm transition-colors ${
+                    className={`px-5 py-3.5 rounded-xl text-base font-medium transition-all ${
                       pathname === href
-                        ? "text-[#29abe2] bg-[#29abe2]/10 font-medium"
-                        : "text-[#b0b0b0] hover:text-white hover:bg-white/5"
+                        ? "text-white bg-[#29abe2] shadow-lg shadow-[#29abe2]/20"
+                        : "text-[#b0b0b0] hover:text-white hover:bg-white/5 active:scale-95"
                     }`}
                   >
                     {label}
@@ -145,19 +185,29 @@ export default function Navbar() {
                 ))}
               </nav>
 
-              <div className="p-4 border-t border-[#252525] flex flex-col gap-3">
+              {/* Bottom Actions */}
+              <div className="p-5 border-t border-[#2a2a2a] bg-[#0f0f0f]/50 flex flex-col gap-3">
+                <a
+                  href="https://maps.google.com/?q=18+College+St,+Bedford+MK42+8LU"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 text-[#b0b0b0] hover:text-[#29abe2] text-sm px-4 py-2.5 hover:bg-white/5 rounded-lg transition-all"
+                >
+                  <MapPin size={16} className="text-[#29abe2]" />
+                  <span>18 College St, Bedford MK42 8LU</span>
+                </a>
                 <a
                   href="tel:07986848798"
-                  className="flex items-center gap-2 text-[#29abe2] text-sm px-4 py-2"
+                  className="flex items-center gap-3 text-[#29abe2] hover:text-[#4dc3f0] text-base font-medium px-4 py-2.5 hover:bg-[#29abe2]/5 rounded-lg transition-all"
                 >
-                  <Phone size={14} />
-                  07986 848798
+                  <Phone size={16} />
+                  <span>07986 848798</span>
                 </a>
                 <Link
                   href="/booking"
-                  className="bg-[#29abe2] hover:bg-[#1a7fb5] text-white text-sm font-semibold px-5 py-3 rounded-xl text-center flex items-center justify-center gap-2 transition-colors"
+                  className="bg-gradient-to-r from-[#29abe2] to-[#1a7fb5] hover:from-[#1a7fb5] hover:to-[#29abe2] text-white text-base font-bold px-6 py-4 rounded-xl text-center flex items-center justify-center gap-2.5 transition-all shadow-lg shadow-[#29abe2]/20 active:scale-95"
                 >
-                  <Calendar size={14} />
+                  <Calendar size={16} />
                   Book an Appointment
                 </Link>
               </div>

@@ -19,10 +19,22 @@ export const metadata: Metadata = {
     "Bedford's trusted garage. Expert MOT testing, car servicing, diagnostics and repairs at 18 College St, Bedford MK42 8LU. Dealership quality at honest prices. DVSA authorised. Book online 24/7.",
   keywords:
     "MOT Bedford, car service Bedford, garage Bedford, vehicle diagnostics Bedford, MOT test MK42, car repair Bedford, AI Diagnostics Ltd, Bedford mechanic, Bedford MOT station, Kempston garage",
+  icons: {
+    icon: [
+      { url: '/vector.png', sizes: 'any' },
+      { url: '/vector.png', sizes: '32x32', type: 'image/png' },
+      { url: '/vector.png', sizes: '16x16', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/vector.png', sizes: '180x180', type: 'image/png' },
+    ],
+    shortcut: '/vector.png',
+  },
   openGraph: {
     siteName: "AI Diagnostics Ltd",
     locale: "en_GB",
     type: "website",
+    images: [{ url: '/logo.png', width: 1200, height: 630 }],
   },
   robots: {
     index: true,
